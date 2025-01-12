@@ -1,6 +1,6 @@
-# Keycloak Last Login Event Listener
+# Keycloak Last Email Verification Event Listener
 
-Sets a last login attribute on the user model when they login.
+Sets a last email verification attribute on the user model when they login.
 
 This is based on the templates provided by [zonaut](https://github.com/zonaut/keycloak-extensions).
 

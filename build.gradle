@@ -16,12 +16,12 @@ repositories {
     }
 }
 
-group = 'de.scimeda.keycloak'
-version = '0.0.1-SNAPSHOT'
-description = 'last-login-event-listener'
+group = 'de.fimm-online.keycloak'
+version = '0.0.1'
+description = 'last-email-verification-listener'
 
 ext {
-    keycloakVersion = "24.0.2"
+    keycloakVersion = "26.0.7"
 }
 
 
@@ -34,7 +34,7 @@ dependencies {
 
 java {
     toolchain {
-        languageVersion = JavaLanguageVersion.of(17)
+        languageVersion = JavaLanguageVersion.of(21)
     }
 }
 

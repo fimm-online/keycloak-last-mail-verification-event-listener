@@ -1,4 +1,4 @@
-package de.scimeda.keycloak.events.logging;
+package de.fimmonline.keycloak.events.logging;
 
 import org.jboss.logging.Logger;
 import org.keycloak.events.Event;
@@ -12,21 +12,21 @@ import java.time.ZoneOffset;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 
-public class LastLoginEventListenerProvider implements EventListenerProvider {
+public class LastEmailVerificationEventListenerProvider implements EventListenerProvider {
 
-    private static final Logger log = Logger.getLogger(LastLoginEventListenerProvider.class);
+    private static final Logger log = Logger.getLogger(LastEmailVerificationEventListenerProvider.class);
 
     private final KeycloakSession session;
     private final RealmProvider model;
 
-    public LastLoginEventListenerProvider(KeycloakSession session) {
+    public LastEmailVerificationEventListenerProvider(KeycloakSession session) {
         this.session = session;
         this.model = session.realms();
     }
 
     @Override
     public void onEvent(Event event) {
-        if (!EventType.LOGIN.equals(event.getType())) {
+        if (!EventType.VERIFY_EMAIL.equals(event.getType())) {
             return;
         }
         var realm = model.getRealm(event.getRealmId());
@@ -35,20 +35,12 @@ public class LastLoginEventListenerProvider implements EventListenerProvider {
         if (user == null) {
             return;
         }
-        log.info("Updating last login status for user: " + user.getUsername());
-
-        var userAttrs = user.getAttributes();
-        if (userAttrs.containsKey("last-login")) {
-            var userLastLogin = userAttrs.get("last-login");
-            if (userLastLogin != null && !userLastLogin.isEmpty()) {
-                user.setSingleAttribute("prior-login", userLastLogin.get(0));
-            }
-        }
+        log.info("Updating last email verification status for user: " + user.getUsername());
 
         // Use current server time for login event
-        var loginTime = ZonedDateTime.now(ZoneOffset.UTC);
-        var loginTimeS = DateTimeFormatter.ISO_DATE_TIME.format(loginTime);
-        user.setSingleAttribute("last-login", loginTimeS);
+        var verificationTime = ZonedDateTime.now(ZoneOffset.UTC);
+        var verificationTimeS = DateTimeFormatter.ISO_DATE_TIME.format(verificationTime);
+        user.setSingleAttribute("last-email-verification", verificationTimeS);
     }
 
     @Override

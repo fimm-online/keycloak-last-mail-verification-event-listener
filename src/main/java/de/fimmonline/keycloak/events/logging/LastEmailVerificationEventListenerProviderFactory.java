@@ -1,4 +1,4 @@
-package de.scimeda.keycloak.events.logging;
+package de.fimmonline.keycloak.events.logging;
 
 import org.keycloak.Config;
 import org.keycloak.events.EventListenerProviderFactory;
@@ -6,11 +6,11 @@ import org.keycloak.models.KeycloakSession;
 import org.keycloak.models.KeycloakSessionFactory;
 
 
-public class LastLoginEventListenerProviderFactory implements EventListenerProviderFactory {
+public class LastEmailVerificationEventListenerProviderFactory implements EventListenerProviderFactory {
 
     @Override
-    public LastLoginEventListenerProvider create(KeycloakSession keycloakSession) {
-        return new LastLoginEventListenerProvider(keycloakSession);
+    public LastEmailVerificationEventListenerProvider create(KeycloakSession keycloakSession) {
+        return new LastEmailVerificationEventListenerProvider(keycloakSession);
     }
 
     @Override
@@ -30,7 +30,7 @@ public class LastLoginEventListenerProviderFactory implements EventListenerProvi
 
     @Override
     public String getId() {
-        return "last_login";
+        return "last_email_verification";
     }
 
 }
